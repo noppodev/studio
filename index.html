@@ -1,84 +1,384 @@
-
 <!DOCTYPE html>
-<html lang="ja" class="scroll-smooth">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoppoStudio</title>
+    <title>NoppoStudio | Simply Creative</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --accent: #3b82f6;
-            --bg-deep: #020617;
+            --accent: #1a73e8;
+            --text-main: #202124;
+            --text-secondary: #5f6368;
+            --font-main: 'Inter', 'Noto Sans JP', sans-serif;
         }
+
         body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg-deep);
-            color: #f8fafc;
-            overflow-x: hidden;
-        }
-        .mono { font-family: 'JetBrains Mono', monospace; }
-        
-        /* 浮き上がるアニメーション */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+            font-family: var(--font-main);
+            color: var(--text-main);
+            background-color: #ffffff;
+            scroll-behavior: smooth;
         }
 
-        .neon-line {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-            opacity: 0.3;
-        }
-
-        .glass {
-            background: rgba(15, 23, 42, 0.6);
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: #020617; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+        .hero-viewport {
+            min-height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at 50% 50%, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 20px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            border: 1px solid #eeeeee;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transform: translateY(-4px);
+            border-color: #e0e0e0;
+        }
+
+        .noppo-icon-container {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .icon-browser { background-color: #f1f3f4; color: #202124; }
+        .icon-board { background-color: #e8f0fe; color: #1a73e8; }
+        .icon-drive { background-color: #e6f4ea; color: #1e8e3e; }
+        .icon-nexus { background-color: #fef7e0; color: #f9ab00; }
+        .icon-dt { background-color: #fce8e6; color: #d93025; }
+        .icon-li { background-color: #f3e5f5; color: #9c27b0; }
+        .icon-form { background-color: #e1f5fe; color: #039be5; }
+        .icon-account { background-color: #f8f9fa; color: #5f6368; }
+
+        .hero-title {
+            letter-spacing: -0.04em;
+            line-height: 1.05;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeInUp 1s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
     </style>
-
-<link rel="stylesheet" href="/index.css">
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/"
-  }
-}
-</script>
-  <script type="module" crossorigin src="/assets/index-B15eTzcO.js"></script>
 </head>
-<body>
-    <div id="root"></div>
-    <script>
-        const setupObserver = () => {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
-                });
-            }, { threshold: 0.1 });
+<body class="antialiased">
 
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full glass-nav z-[100] border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="https://studio.noppo.f5.si" class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-sm italic">N</span>
+                </div>
+                <span class="font-bold text-xl tracking-tight text-[#202124]">NoppoStudio</span>
+            </a>
+            
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-[#5f6368]">
+                <a href="#ecosystem" class="hover:text-black transition-colors">製品</a>
+                <a href="https://my.noppoaccount.f5.si" class="hover:text-black transition-colors">アカウント管理</a>
+            </div>
+
+            <div class="flex items-center gap-4" id="auth-section">
+                <button onclick="handleLogin()" id="login-btn" class="bg-black text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-gray-800 transition-all shadow-sm">
+                    ログイン
+                </button>
+                <div id="user-profile" class="hidden flex items-center gap-2 bg-gray-50 p-1 pr-4 rounded-full border border-gray-200">
+                    <img id="user-icon" src="" alt="" class="w-8 h-8 rounded-full">
+                    <span id="user-name" class="text-sm font-bold ml-1"></span>
+                    <button onclick="handleLogout()" class="ml-2 text-[10px] text-gray-400 hover:text-black uppercase font-bold">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-viewport">
+        <div class="max-w-5xl mx-auto px-6 text-center animate-fade-in">
+            <h1 class="text-7xl md:text-9xl font-black hero-title mb-12 text-[#202124]">
+                Simply<br><span class="text-gray-400">Creative.</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-[#5f6368] max-w-2xl mx-auto leading-relaxed mb-16 font-medium">
+                NoppoStudioのエコシステムは、学習、共有、検索、ブラウジングのすべてを一つのシンプルな体験へと統合します。
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                <a href="#ecosystem" class="w-full sm:w-auto bg-black text-white px-12 py-5 rounded-2xl text-lg font-bold hover:scale-105 transition-all shadow-xl">
+                    サービス一覧を見る
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem -->
+    <section id="ecosystem" class="py-32 border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-20 text-center">
+                <h2 class="text-4xl font-bold text-[#202124] mb-4">Core Ecosystem</h2>
+                <p class="text-[#5f6368]">NoppoStudioが提供する独自のプロダクト群</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                
+                <!-- NoppoBrowser -->
+                <div class="product-card p-8 min-h-[320px]">
+                    <div>
+                        <div class="noppo-icon-container icon-browser">
+                            <i data-lucide="layout" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">NoppoBrowser</h3>
+                        <p class="description-text font-medium text-sm">NMLを標準サポート。プライバシーとスピードを両立した、NoppoStudio独自の次世代ブラウザ。</p>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://browser.noppo.f5.si" class="inline-flex items-center text-sm font-bold border-b-2 border-black pb-1 hover:opacity-60 transition-all">
+                            詳しく見る
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NoppoBoard -->
+                <div class="product-card p-8 min-h-[320px]">
+                    <div>
+                        <div class="noppo-icon-container icon-board">
+                            <i data-lucide="book-open" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">NoppoBoard</h3>
+                        <p class="description-text font-medium text-sm">教材の共有、課題の提出、クラス内のコミュニケーションを円滑にする教育プラットフォーム。</p>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://board.noppoworkspace.f5.si" class="inline-flex items-center text-sm font-bold border-b-2 border-[#1a73e8] text-[#1a73e8] pb-1 hover:opacity-60 transition-all">
+                            Boardを開く
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Nexus -->
+                <div class="product-card p-8 min-h-[320px]">
+                    <div>
+                        <div class="noppo-icon-container icon-nexus">
+                            <i data-lucide="shapes" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">Nexus Search</h3>
+                        <p class="description-text font-medium text-sm">情報を「探す」だけでなく「ストック」し、活用するための独自の検索エンジン。</p>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://nexus.noppo.f5.si" class="inline-flex items-center text-sm font-bold border-b-2 border-[#f9ab00] text-[#f9ab00] pb-1 hover:opacity-60 transition-all">
+                            Nexusで検索
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NoppoDrive -->
+                <div class="product-card p-8 min-h-[320px]">
+                    <div>
+                        <div class="noppo-icon-container icon-drive">
+                            <i data-lucide="folder-kanban" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">NoppoDrive</h3>
+                        <p class="description-text font-medium text-sm">drive.noppo.f5.si。あらゆるファイルを安全に保管。シームレスな共有と管理を実現します。</p>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://drive.noppo.f5.si" class="inline-flex items-center text-sm font-bold border-b-2 border-[#1e8e3e] text-[#1e8e3e] pb-1 hover:opacity-60 transition-all">
+                            ドライブへ移動
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NoppoDT -->
+                <div class="product-card p-8 min-h-[320px]">
+                    <div>
+                        <div class="noppo-icon-container icon-dt">
+                            <i data-lucide="zap" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">NoppoDT</h3>
+                        <p class="description-text font-medium text-sm">1対1の高速P2P転送。暗号化された安全な経路で、大容量ファイルを瞬時に相手に届けます。</p>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://dt.noppo.f5.si" class="inline-flex items-center text-sm font-bold border-b-2 border-[#d93025] text-[#d93025] pb-1 hover:opacity-60 transition-all">
+                            ファイルを送る
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NoppoLI -->
+                <div class="product-card p-8 min-h-[320px]">
+                    <div>
+                        <div class="noppo-icon-container icon-li">
+                            <i data-lucide="link" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">NoppoLI</h3>
+                        <p class="description-text font-medium text-sm">スマートな短縮URLマネージャー。リンクを短くし、クリックの背後にある統計を可視化します。</p>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://li.noppo.f5.si" class="inline-flex items-center text-sm font-bold border-b-2 border-[#9c27b0] text-[#9c27b0] pb-1 hover:opacity-60 transition-all">
+                            URLを短縮
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NoppoForm -->
+                <div class="product-card p-8 min-h-[320px]">
+                    <div>
+                        <div class="noppo-icon-container icon-form">
+                            <i data-lucide="check-square" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">NoppoForm</h3>
+                        <p class="description-text font-medium text-sm">直感的な操作でアンケートを作成。自動集計機能により、データを即座に可視化します。</p>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://forms.noppoworkspace.f5.si" class="inline-flex items-center text-sm font-bold border-b-2 border-[#039be5] text-[#039be5] pb-1 hover:opacity-60 transition-all">
+                            フォームを作成
+                        </a>
+                    </div>
+                </div>
+
+                <!-- NoppoAccount -->
+                <div class="product-card p-8 min-h-[320px] bg-gray-50">
+                    <div>
+                        <div class="noppo-icon-container icon-account">
+                            <i data-lucide="user" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">NoppoAccount</h3>
+                        <p class="description-text font-medium text-sm">すべてを繋ぐ一つの鍵。NoppoAuthによるセキュアでシームレスな認証体験を提供。</p>
+                    </div>
+                    <div class="mt-8">
+                        <a href="https://my.noppoaccount.f5.si" class="inline-flex items-center text-sm font-bold border-b-2 border-gray-400 pb-1 hover:opacity-60 transition-all">
+                            設定を管理
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-24 bg-white border-t border-gray-100 text-[#5f6368]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
+                <div class="col-span-1">
+                    <div class="flex items-center gap-3 text-[#202124] mb-8">
+                        <div class="w-10 h-10 bg-black rounded-xl flex items-center justify-center">
+                            <span class="text-white font-bold text-base italic">N</span>
+                        </div>
+                        <span class="font-bold text-2xl tracking-tight">NoppoStudio</span>
+                    </div>
+                    <p class="text-sm font-medium leading-relaxed uppercase tracking-tighter">
+                        Building the future of the web.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="text-sm font-bold text-[#202124] mb-8 uppercase tracking-widest">Workspace</h5>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="https://board.noppoworkspace.f5.si" class="hover:text-black">NoppoBoard</a></li>
+                        <li><a href="https://forms.noppoworkspace.f5.si" class="hover:text-black">NoppoForm</a></li>
+                        <li><a href="https://drive.noppo.f5.si" class="hover:text-black">NoppoDrive</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-sm font-bold text-[#202124] mb-8 uppercase tracking-widest">Utilities</h5>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="https://li.noppo.f5.si" class="hover:text-black">NoppoLI</a></li>
+                        <li><a href="https://dt.noppo.f5.si" class="hover:text-black">NoppoDT</a></li>
+                        <li><a href="https://nexus.noppo.f5.si" class="hover:text-black">Nexus Search</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="text-sm font-bold text-[#202124] mb-8 uppercase tracking-widest">Platform</h5>
+                    <ul class="space-y-4 text-sm font-medium">
+                        <li><a href="https://browser.noppo.f5.si" class="hover:text-black">NoppoBrowser</a></li>
+                        <li><a href="https://my.noppoaccount.f5.si" class="hover:text-black">NoppoAccount</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-between items-center pt-12 border-t border-gray-100">
+                <p class="text-[12px] font-bold tracking-widest uppercase">© 2026 NoppoStudio. Simply Creative.</p>
+                <!-- SNSアイコンを削除 -->
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // NoppoAuth Logic
+        const AUTH_WORKER_URL = "https://noppo-auth.noppo5319.workers.dev";
+        const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ2YXZhc3JkeGd1cWtpaWdjeGtsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc0MTk5ODcsImV4cCI6MjA4Mjk5NTk4N30.CVq3lyRbxek7Ejs4tP5sN9-0JNEXSLtCsC2Pj-skFFQ";
+
+        function handleLogin() {
+            const currentUrl = encodeURIComponent(window.location.href);
+            window.location.href = `${AUTH_WORKER_URL}?redirect=${currentUrl}`;
+        }
+
+        async function loadUser() {
+            const params = new URLSearchParams(window.location.search);
+            const ticket = params.get('ticket');
+            try {
+                const url = ticket 
+                    ? `${AUTH_WORKER_URL}/auth/v1/user?ticket=${ticket}`
+                    : `${AUTH_WORKER_URL}/auth/v1/user`;
+
+                const res = await fetch(url, { headers: { "apikey": SUPABASE_KEY } });
+                if (res.ok) {
+                    const user = await res.json();
+                    if (ticket) {
+                        const cleanUrl = window.location.origin + window.location.pathname;
+                        window.history.replaceState({}, document.title, cleanUrl);
+                    }
+                    return {
+                        userId: user.user_metadata.display_name,
+                        avatar: user.user_metadata.avatar_url
+                    };
+                }
+            } catch (e) {
+                console.error("Auth failed:", e);
+            }
+            return null;
+        }
+
+        function handleLogout() {
+            const currentUrl = encodeURIComponent(window.location.href);
+            window.location.href = `${AUTH_WORKER_URL}/logout?redirect=${currentUrl}`;
+        }
+
+        window.onload = async () => {
+            const user = await loadUser();
+            const loginBtn = document.getElementById('login-btn');
+            const profile = document.getElementById('user-profile');
+            const nameEl = document.getElementById('user-name');
+            const iconEl = document.getElementById('user-icon');
+
+            if (user) {
+                loginBtn.classList.add('hidden');
+                profile.classList.remove('hidden');
+                nameEl.innerText = user.userId;
+                iconEl.src = user.avatar;
+            }
         };
-        const mutationObserver = new MutationObserver(() => setupObserver());
-        mutationObserver.observe(document.body, { childList: true, subtree: true });
-        window.addEventListener('load', setupObserver);
     </script>
 </body>
 </html>
